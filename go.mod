@@ -1,4 +1,4 @@
-module github.com/wenlincheng/go-common
+module github.com/wenlincheng/go-commons-lang
 
 go 1.13
 
