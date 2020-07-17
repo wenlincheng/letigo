@@ -2,4 +2,8 @@ module github.com/wenlincheng/letigo
 
 go 1.13
 
-require go.mongodb.org/mongo-driver v1.3.5
+require (
+	github.com/wenlincheng/go-common v0.0.0-20200517135156-8c3ebf50ac26 // indirect
+	go.mongodb.org/mongo-driver v1.3.0
+
+)

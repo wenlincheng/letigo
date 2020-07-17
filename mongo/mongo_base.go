@@ -2,51 +2,10 @@ package mongo
 
 import (
 	"context"
-	"log"
-	"time"
 
-	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.mongodb.org/mongo-driver/x/bsonx"
 )
-
-var clientMongo *mongo.Client
-
-func GetMongoClient() *mongo.Client {
-	return clientMongo
-}
-
-// main 中初始化连接
-func InitMongoClient(urlMongo, user, password string) error {
-	log.Print("Init mongo connection ...")
-	client, err := mongo.Connect(TimeoutContext(), options.Client().ApplyURI(urlMongo).SetAuth(options.Credential{
-		Username: user,
-		Password: password,
-	}))
-	if err != nil {
-		return err
-	}
-	CloseMongoClient()
-
-	clientMongo = client
-	return nil
-}
-
-func TimeoutContext() context.Context {
-	TimeoutContext, _ := context.WithTimeout(context.Background(), 10*time.Second)
-	return TimeoutContext
-}
-
-func CloseMongoClient() {
-	if clientMongo != nil {
-		err := clientMongo.Disconnect(TimeoutContext())
-		if err != nil {
-			log.Print(err)
-		} else {
-			log.Print("Close mongo connection ...")
-		}
-	}
-}
 
 // 添加一条记录
 func Insert(database string, collection string, doc interface{}) error {

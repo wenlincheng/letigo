@@ -3,7 +3,7 @@ package algorithm
 import (
 	"errors"
 	"fmt"
-	. "github.com/wenlincheng/go-common/collection"
+	"github.com/wenlincheng/letigo/collection"
 	"math/rand"
 	"time"
 )
@@ -30,7 +30,7 @@ func (a *AliasMethod) Initialize(prob []float64) error {
 	probtemp := make([]float64, a.length)
 
 	// 双向队列
-	small := LinkedList{}
+	small := collection.LinkedList{}
 	large := LinkedList{}
 
 	for i := 0; i < a.length; i++ {
