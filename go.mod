@@ -1,5 +1,6 @@
 module github.com/wenlincheng/letigo
 
-go 1.13
+go 1.14
 
-require github.com/wenlincheng/go-common v0.0.0-20200517135156-8c3ebf50ac26
+require github.com/wenlincheng/letigo latest
+
