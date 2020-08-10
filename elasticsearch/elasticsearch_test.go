@@ -9,7 +9,7 @@ func TestQuery(t *testing.T) {
 	es := NewEs("", "", "http://localhost:9200")
 	query := map[string]interface{}{
 		"query": map[string]interface{}{
-			"match": map[string]interface{}{
+			"matchd": map[string]interface{}{
 				"title": "C语言",
 			},
 		},

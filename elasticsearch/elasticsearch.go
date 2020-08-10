@@ -5,8 +5,8 @@ import (
 	"context"
 	"encoding/json"
 	"github.com/elastic/go-elasticsearch/v7"
+	"github.com/wenlincheng/letigo/baseerror"
 	"log"
-	"strings"
 )
 
 type Elasticsearch struct {
@@ -67,12 +67,8 @@ func (es *Elasticsearch) Search(index string, query map[string]interface{}) (*Se
 			log.Fatalf("Error parsing the response body: %s", err)
 			return nil, err
 		} else {
-			// Print the response status and error information.
-			log.Fatalf("[%s] %s: %s",
-				res.Status(),
-				e["error"].(map[string]interface{})["type"],
-				e["error"].(map[string]interface{})["reason"],
-			)
+			reason := e["error"].(map[string]interface{})["reason"].(string)
+			return nil, baseerror.NewBaseError(res.StatusCode, reason)
 		}
 	}
 
@@ -89,20 +85,8 @@ func (es *Elasticsearch) Search(index string, query map[string]interface{}) (*Se
 	err = json.Unmarshal(b, &result)
 	if err != nil {
 		log.Fatalf("Error parsing map to struct: %s", err)
+		return nil, err
 	}
-	// Print the response status, number of results, and request duration.
-	log.Printf(
-		"[%s] %d hits; took: %dms",
-		res.Status(),
-		int(r["hits"].(map[string]interface{})["total"].(map[string]interface{})["value"].(float64)),
-		int(r["took"].(float64)),
-	)
-	// Print the ID and document source for each hit.
-	for _, hit := range r["hits"].(map[string]interface{})["hits"].([]interface{}) {
-		log.Printf(" * ID=%s, %s", hit.(map[string]interface{})["_id"], hit.(map[string]interface{})["_source"])
-	}
-
-	log.Println(strings.Repeat("=", 37))
 
 	return &result, nil
 }
