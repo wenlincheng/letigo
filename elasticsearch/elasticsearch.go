@@ -5,7 +5,7 @@ import (
 	"context"
 	"encoding/json"
 	"github.com/elastic/go-elasticsearch/v7"
-	"github.com/wenlincheng/letigo/baseerror"
+	"github.com/wenlincheng/letigo/weberror"
 	"log"
 )
 
@@ -68,7 +68,7 @@ func (es *Elasticsearch) Search(index string, query map[string]interface{}) (*Se
 			return nil, err
 		} else {
 			reason := e["error"].(map[string]interface{})["reason"].(string)
-			return nil, baseerror.NewBaseError(res.StatusCode, reason)
+			return nil, weberror.NewBaseError(res.StatusCode, reason)
 		}
 	}
 

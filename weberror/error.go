@@ -1,4 +1,4 @@
-package baseerror
+package weberror
 
 import "errors"
 
